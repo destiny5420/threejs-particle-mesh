@@ -1,0 +1,55 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.header {
+  @apply absolute z-10 top-0 left-0 w-full py-8 flex justify-between px-8;
+}
+
+.main-container {
+  @apply w-full h-full fixed  overflow-hidden z-0;
+}
+
+.web-gl {
+  @apply w-full h-full;
+}
+
+.btn-link {
+  @apply px-4;
+}
+
+.btn-link-word {
+  @apply text-white font-bold;
+}
+
+.text-wrapper {
+  @apply absolute bottom-10% left-5% max-w-30%;
+}
+
+.text-wrap {
+  @apply mb-2;
+}
+
+.text-block {
+  @apply relative overflow-hidden;
+}
+
+.under-line {
+  @apply relative w-12 h-3 overflow-hidden;
+}
+
+.under-line-inner {
+  @apply absolute left-0 bottom-0 w-full h-50% bg-white;
+}
+
+.mountain-area {
+  @apply text-white text-sm;
+}
+
+.mountain-name {
+  @apply text-white text-8xl font-Oswald;
+}
+
+.mountain-description {
+  @apply text-white text-xs;
+}

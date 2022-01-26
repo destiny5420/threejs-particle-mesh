@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": ".js/main.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.dev.js --open",
+    "dev": "cross-env NODE_ENV=development TAILWIND_MODE=watch webpack-dev-server --config webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
     "beta": "aws s3 sync ./dist s3://{host} --delete",
     "deploy": "aws s3 sync ./dist s3://{host} --delete"
@@ -55,6 +55,8 @@
     "jquery": "^3.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "raw-loader": "^4.0.2",
-    "three": "^0.136.0"
+    "tailwindcss": "^2.2.19",
+    "three": "^0.136.0",
+    "url-loader": "^4.1.1"
   }
 }

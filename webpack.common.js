@@ -9,7 +9,6 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     index: '/js/main/entry.js',
-    support: '/js/support/entry.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -22,6 +21,7 @@ module.exports = {
     modules: [
       path.resolve('src'),
       path.resolve('src/js'),
+      path.resolve('src/css'),
       path.resolve('src/scss'),
       path.resolve('src/assets'),
       path.resolve('src/image'),
@@ -90,7 +90,7 @@ module.exports = {
         exclude: path.resolve('./node_modules'),
       },
       {
-        test:  /\.(mp3|mp4)$/,
+        test: /\.(mp3|mp4)$/,
         use: [
           {
             loader: 'file-loader',
@@ -114,11 +114,6 @@ module.exports = {
       filename: 'index.html',
       template: 'index.html',
       chunks: ['vendor', 'index'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'support/index.html',
-      template: 'support.html',
-      chunks: ['vendor', 'support'],
     }),
     new CopyWebpackPlugin({
       patterns: [

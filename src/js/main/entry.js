@@ -1,8 +1,9 @@
-import 'main.scss'
+/* eslint-disable import/extensions */
+import 'main.css'
 import '@/js/common/common'
-import App from './App'
+import Game from '@/js/main/game'
 
-const app = new App()
+const game = new Game()
 
 /*!
  * -- Preload Sample --

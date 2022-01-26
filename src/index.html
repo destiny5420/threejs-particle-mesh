@@ -23,13 +23,80 @@
     <link rel="stylesheet" href="/static/css/reset.min.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400;700&family=Oswald:wght@400&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <div class="container">
-      <section class="web-gl"></section>
+    <div class="main-container">
+      <header class="header">
+        <a href="/" class="flex justify-center items-center">
+          <div class="relative w-6 mr-3">
+            <img class="inline-block relative w-full" src="./images/header/logo.png" alt="logo" />
+          </div>
+          <p class="text-white font-bold">GLOBAL EXPLORER</p>
+        </a>
+        <ul class="flex justify-center">
+          <li class="btn-link">
+            <a href="/" class="btn-link-word">HOME</a>
+          </li>
+          <li class="btn-link">
+            <a href="/" class="btn-link-word">HOLIDAYS</a>
+          </li>
+          <li class="btn-link">
+            <a href="/" class="btn-link-word">DESTINATION</a>
+          </li>
+          <li class="btn-link">
+            <a href="/" class="btn-link-word">FIGHTS</a>
+          </li>
+          <li class="btn-link">
+            <a href="/" class="btn-link-word">OFFERS</a>
+          </li>
+          <li class="btn-link">
+            <a href="/" class="btn-link-word">CONTACT</a>
+          </li>
+          <li class="btn-link">
+            <div class="relative w-6 text-white">
+              <img
+                class="relative w-full"
+                src="./images/common/icon-search.svg"
+                alt="icon-search"
+              />
+            </div>
+          </li>
+        </ul>
+      </header>
+      <div class="text-wrapper">
+        <div class="text-wrap">
+          <div class="under-line">
+            <div class="under-line-inner"></div>
+          </div>
+        </div>
+        <div class="text-wrap">
+          <div class="text-block">
+            <p class="mountain-area">Switzerland Alps</p>
+          </div>
+        </div>
+        <div class="text-wrap">
+          <div class="text-block">
+            <p class="mountain-name mountain-name-first-1">SAINT</p>
+          </div>
+        </div>
+        <div class="text-wrap">
+          <div class="text-block">
+            <p class="mountain-name mountain-name-first-2">ANTONIEN</p>
+          </div>
+        </div>
+        <div class="text-wrap">
+          <div class="text-block">
+            <p class="mountain-description">
+              Mauris malesuada nusrsit amet auque accumsan tincidunt. Maecenas tincidunt, velit ac
+              porttitor pulvinar, tortor eros facilisis livero.
+            </p>
+          </div>
+        </div>
+      </div>
+      <section id="web-gl" class="web-gl"></section>
     </div>
   </body>
 </html>
