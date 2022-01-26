@@ -23,7 +23,7 @@
 }
 
 .text-wrapper {
-  @apply absolute bottom-10% left-5% max-w-30%;
+  @apply absolute bottom-10% left-5%;
 }
 
 .text-wrap {
@@ -51,5 +51,5 @@
 }
 
 .mountain-description {
-  @apply text-white text-xs;
+  @apply text-white text-xs max-w-50%;
 }

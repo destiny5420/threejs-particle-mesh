@@ -27,13 +27,26 @@ export default class Game {
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.autoRotate = true
-    this.controls.update()
+    // this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+    // this.controls.autoRotate = true
+    // this.controls.update()
     document.getElementById('web-gl').appendChild(this.renderer.domElement)
 
     this.points = null
     this.pointsGSAPs = []
+
+    this.cameraGsap = gsap.fromTo(
+      this.camera.position,
+      {
+        z: 2,
+      },
+      {
+        z: 50,
+        duration: 1.75,
+        ease: 'power2.out',
+        paused: true,
+      },
+    )
 
     this.setup()
     this.create()
@@ -41,6 +54,7 @@ export default class Game {
 
     $('#web-gl').on('click', function (e) {
       self.pointsGSAPs.forEach((el) => el.restart())
+      self.cameraGsap.restart()
     })
   }
 
@@ -82,17 +96,25 @@ export default class Game {
       const cur = i % destPos.count
 
       this.pointsGSAPs.push(
-        gsap.to(startPos.array, {
-          [i * 3]: destPos.array[cur * 3],
-          [i * 3 + 1]: destPos.array[cur * 3 + 1],
-          [i * 3 + 2]: destPos.array[cur * 3 + 2],
-          duration: 2,
-          ease: 'power2.out',
-          onUpdate: () => {
-            startPos.needsUpdate = true
+        gsap.fromTo(
+          startPos.array,
+          {
+            [i * 3]: startPos.array[i * 3],
+            [i * 3 + 1]: startPos.array[i * 3 + 1],
+            [i * 3 + 2]: startPos.array[i * 3 + 2],
           },
-          paused: true,
-        }),
+          {
+            [i * 3]: destPos.array[cur * 3],
+            [i * 3 + 1]: destPos.array[cur * 3 + 1],
+            [i * 3 + 2]: destPos.array[cur * 3 + 2],
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: () => {
+              startPos.needsUpdate = true
+            },
+            paused: true,
+          },
+        ),
       )
     }
 
@@ -129,7 +151,7 @@ export default class Game {
     this.renderer.render(this.scene, this.camera)
     this.mesh.rotation.x += 0.05
     this.mesh.rotation.y += 0.01
-    this.controls.update()
+    // this.controls.update()
 
     requestAnimationFrame(function () {
       self.animation()
