@@ -1,0 +1,87 @@
+/* stylelint-disable scss/at-rule-no-unknown */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.header {
+  @apply hidden sm:flex absolute z-10 top-0 left-0 w-full py-8  justify-between px-6 md:px-8;
+}
+
+.main-container {
+  @apply fixed z-20 w-full h-full overflow-hidden;
+}
+
+.web-gl {
+  @apply relative z-0 w-full h-full;
+}
+
+.btn-link-word {
+  @apply text-white font-bold text-xs md:text-base;
+}
+
+.text-wrapper {
+  @apply absolute z-30 bottom-13.5% md:bottom-10% left-5% pl-2 sm:pl-0;
+}
+
+@layer components {
+  .text-wrap {
+    @apply mb-1 lg:mb-2;
+  }
+
+  .btn-link {
+    @apply px-1 md:px-4  flex items-center;
+  }
+}
+
+.text-block {
+  @apply relative overflow-hidden;
+}
+
+.under-line {
+  @apply relative w-8 md:w-12 h-1 md:h-3 overflow-hidden;
+}
+
+.under-line-inner {
+  @apply absolute left-0 bottom-0 w-full h-50% bg-white;
+}
+
+.mountain-area {
+  @apply text-white text-xs lg:text-sm font-extralight;
+}
+
+.mountain-name {
+  @apply text-white text-3xl lg:text-8xl font-Oswald;
+}
+
+.mountain-description {
+  @apply text-white text-xs max-w-90% lg:max-w-50% font-extralight;
+}
+
+.btn-tag {
+  @apply p-2 md:p-4 bg-yellow-500 rounded-full mr-2 md:mr-4 lg:mr-7;
+}
+
+.btn-discover {
+  @apply py-2  px-6 md:px-8 text-white text-xs sm:text-sm border-white border-1 rounded-full duration-200 hover:bg-white hover:text-black;
+}
+
+.page-nav {
+  @apply absolute z-30 bottom-5% lg:bottom-10% right-5% flex justify-center items-center w-90% lg:w-2/5;
+}
+
+.btn-arrow {
+  @apply text-white p-3 lg:p-5 rounded-full border-white border-1 flex justify-center items-center mx-2 lg:hover:bg-gray-100 duration-300 hover:text-black lg:hover:border-transparent;
+}
+
+.page-line {
+  @apply h-0.05rem mx-5 w-full bg-white;
+}
+
+.page-num {
+  @apply text-white font-Oswald text-5xl lg:text-7xl;
+}
+
+.text-reveal {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transform: translateY(2rem);
+}

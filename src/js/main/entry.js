@@ -1,8 +1,21 @@
-import 'main.scss'
+/* eslint-disable import/extensions */
+import 'main.css'
 import '@/js/common/common'
-import App from './App'
+import gsap from 'gsap'
+import $ from 'jquery'
+import Game from '@/js/main/game'
 
-const app = new App()
+const game = new Game()
+
+const changeMesh = game.changeMesh()
+
+$('.btn-arrow-prev').on('click', function () {
+  changeMesh(false)
+})
+
+$('.btn-arrow-next').on('click', function () {
+  changeMesh(true)
+})
 
 /*!
  * -- Preload Sample --
