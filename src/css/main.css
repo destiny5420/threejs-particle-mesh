@@ -67,7 +67,7 @@
 }
 
 .btn-discover {
-  @apply py-3 px-7 text-white text-base border-white border-1 rounded-full duration-200 hover:bg-white hover:text-black;
+  @apply py-2 px-8 text-white text-sm border-white border-1 rounded-full duration-200 hover:bg-white hover:text-black;
 }
 
 .page-nav {

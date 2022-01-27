@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-lonely-if */
 /* eslint-disable import/extensions */
 import * as THREE from 'three'
@@ -5,10 +6,9 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import $ from 'jquery'
 import gsap from 'gsap'
 import { Maths } from '@/utils/formula.js'
-
-let ORBIT_CONTROL_ENABLE = false
 
 export default class Game {
   constructor() {
@@ -129,6 +129,7 @@ export default class Game {
 
     const startPos = this.startGeometry.getAttribute('position')
     const destPos = this.pointPathArray[this.pathIndex].getAttribute('position')
+    self.setPageNum(self.pathIndex)
 
     for (let i = 0; i < startPos.count; i += 1) {
       const cur = i % destPos.count
@@ -190,6 +191,10 @@ export default class Game {
     // })
   }
 
+  setPageNum(index) {
+    $('.page-nav .page-num').text(`0${index + 1}`)
+  }
+
   animation(time) {
     const self = this
     this.renderer.render(this.scene, this.camera)
@@ -206,9 +211,9 @@ export default class Game {
 
   changeMesh() {
     const self = this
-
     const startPos = this.startGeometry.getAttribute('position')
     let destPos
+    const pageNum = $('.page-nav .page-num')
 
     return function (forward) {
       if (forward) {
@@ -250,6 +255,34 @@ export default class Game {
           },
         )
       }
+
+      gsap
+        .timeline()
+        .fromTo(
+          pageNum,
+          {
+            opacity: 1,
+          },
+          {
+            opacity: 0,
+            duration: 0.25,
+            ease: 'power1.in',
+            onComplete: () => {
+              self.setPageNum(self.pathIndex)
+            },
+          },
+        )
+        .fromTo(
+          pageNum,
+          {
+            opacity: 0,
+          },
+          {
+            opacity: 1,
+            duration: 0.25,
+            ease: 'power1.out',
+          },
+        )
     }
   }
 }
