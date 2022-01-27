@@ -7,6 +7,8 @@ import gsap from 'gsap'
 
 import start from '@/images/main/star.png'
 
+const ORBIT_CONTROL_ENABLE = false
+
 export default class Game {
   constructor() {
     const self = this
@@ -14,7 +16,8 @@ export default class Game {
     this.name = `Game Constructor`
 
     this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 100)
-    this.camera.position.z = 50
+    this.camera.position.z = 2
+    this.camera.lookAt(0, 0, 0)
 
     this.scene = new THREE.Scene()
 
@@ -22,47 +25,75 @@ export default class Game {
     const material = new THREE.MeshNormalMaterial()
 
     this.mesh = new THREE.Mesh(geometry, material)
+
+    // this.camera.lookAt(new THREE.Vector3(this.mesh.position))
     this.scene.add(this.mesh)
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.setSize(window.innerWidth, window.innerHeight)
 
-    // this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    // this.controls.autoRotate = true
-    // this.controls.update()
+    if (ORBIT_CONTROL_ENABLE) {
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+      this.controls.autoRotate = true
+      this.controls.update()
+    }
+
     document.getElementById('web-gl').appendChild(this.renderer.domElement)
 
     this.points = null
     this.pointsGSAPs = []
 
-    this.cameraGsap = gsap.fromTo(
-      this.camera.position,
-      {
-        z: 2,
-      },
-      {
-        z: 50,
-        duration: 1.75,
-        ease: 'power2.out',
-        paused: true,
-      },
-    )
+    this.cameraGsap = gsap
+      .timeline()
+      .fromTo(
+        this.camera.position,
+        {
+          z: 2,
+        },
+        {
+          z: 50,
+          duration: 1.75,
+          ease: 'power1.out',
+        },
+      )
+      .fromTo(
+        this.camera.position,
+        {
+          y: 0,
+        },
+        {
+          y: -40,
+          duration: 1.75,
+          ease: 'power1.out',
+          onUpdate: () => {
+            self.camera.lookAt(0, 0, 0)
+          },
+        },
+        '-=1.75',
+      )
+      .pause()
 
     this.create()
     this.animation()
 
-    $('#web-gl').on('click', function (e) {
+    // $('#web-gl').on('click', function (e) {
+    //   self.pointsGSAPs.forEach((el) => el.restart())
+    //   self.cameraGsap.restart()
+    // })
+    gsap.delayedCall(2, () => {
       self.pointsGSAPs.forEach((el) => el.restart())
       self.cameraGsap.restart()
     })
   }
 
   create() {
+    const self = this
+
     const vertices = []
     for (let i = 0; i < 1500; i += 1) {
-      const x = THREE.MathUtils.randFloatSpread(30)
-      const y = THREE.MathUtils.randFloatSpread(30)
-      const z = THREE.MathUtils.randFloatSpread(30)
+      const x = THREE.MathUtils.randFloatSpread(20)
+      const y = THREE.MathUtils.randFloatSpread(20)
+      const z = THREE.MathUtils.randFloatSpread(20)
 
       vertices.push(x, y, z)
     }
@@ -80,6 +111,7 @@ export default class Game {
     })
 
     this.points = new THREE.Points(geometry, matStar)
+    this.points.rotation.y = 0
 
     this.scene.add(this.points)
 
@@ -115,37 +147,48 @@ export default class Game {
     // const fbxLoader = new FBXLoader()
     // fbxLoader.load('/src/images/model/guitar/guitar.FBX', function (obj) {
     //   console.log(obj.children[0].geometry.getAttribute('position'))
-    //   // console.log(glft.scene.children[0])
+    //   const startPos = geometry.getAttribute('position')
+    //   const destPos = obj.children[0].geometry.getAttribute('position')
 
-    //   // const startPos = geometry.getAttribute('position')
-    //   // const destPos = obj.children[0].geometry.getAttribute('position')
+    //   for (let i = 0; i < startPos.count; i += 1) {
+    //     const cur = i % destPos.count
 
-    //   // console.log(destPos)
-
-    //   // for (let i = 0; i < startPos.count; i + 1) {
-    //   //   const cur = i % destPos.count
-
-    //   //   gsap.to(startPos, {
-    //   //     [0 * 3 + 0]: destPos.array[cur * 3 + 0],
-    //   //     [0 * 3 + 1]: destPos.array[cur * 3 + 1],
-    //   //     [0 * 3 + 2]: destPos.array[cur * 3 + 2],
-    //   //     duration: 3,
-    //   //     delay: 2,
-    //   //     onUpdate: function () {
-    //   //       startPos.needsUpdate = true
-    //   //     },
-    //   //   })
-    //   // }
+    //     self.pointsGSAPs.push(
+    //       gsap.fromTo(
+    //         startPos.array,
+    //         {
+    //           [i * 3]: startPos.array[i * 3],
+    //           [i * 3 + 1]: startPos.array[i * 3 + 1],
+    //           [i * 3 + 2]: startPos.array[i * 3 + 2],
+    //         },
+    //         {
+    //           [i * 3]: destPos.array[cur * 3],
+    //           [i * 3 + 1]: destPos.array[cur * 3 + 1],
+    //           [i * 3 + 2]: destPos.array[cur * 3 + 2],
+    //           duration: 2,
+    //           ease: 'power2.out',
+    //           onUpdate: () => {
+    //             startPos.needsUpdate = true
+    //           },
+    //           paused: true,
+    //         },
+    //       ),
+    //     )
+    //   }
     // })
   }
 
   animation(time) {
     const self = this
-    // console.log(`animation / this: `, this)
     this.renderer.render(this.scene, this.camera)
     this.mesh.rotation.x += 0.05
     this.mesh.rotation.y += 0.01
-    // this.controls.update()
+
+    this.points.rotation.y += 0.01
+
+    if (ORBIT_CONTROL_ENABLE) {
+      this.controls.update()
+    }
 
     requestAnimationFrame(function () {
       self.animation()
