@@ -7,11 +7,11 @@
 }
 
 .main-container {
-  @apply w-full h-full fixed  overflow-hidden z-0;
+  @apply fixed z-20 w-full h-full overflow-hidden;
 }
 
 .web-gl {
-  @apply w-full h-full;
+  @apply relative z-0 w-full h-full;
 }
 
 .btn-link {
@@ -23,7 +23,7 @@
 }
 
 .text-wrapper {
-  @apply absolute bottom-10% left-5%;
+  @apply absolute z-30 bottom-10% left-5%;
 }
 
 .text-wrap {
@@ -43,7 +43,7 @@
 }
 
 .mountain-area {
-  @apply text-white text-sm;
+  @apply text-white text-sm font-extralight;
 }
 
 .mountain-name {
@@ -51,5 +51,10 @@
 }
 
 .mountain-description {
-  @apply text-white text-xs max-w-50%;
+  @apply text-white text-xs max-w-50% font-extralight;
+}
+
+.text-reveal {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transform: translateY(2rem);
 }

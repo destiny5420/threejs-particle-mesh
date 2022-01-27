@@ -48,7 +48,6 @@ export default class Game {
       },
     )
 
-    this.setup()
     this.create()
     this.animation()
 
@@ -56,10 +55,6 @@ export default class Game {
       self.pointsGSAPs.forEach((el) => el.restart())
       self.cameraGsap.restart()
     })
-  }
-
-  setup() {
-    console.log(`setup / name: ${this.name}`)
   }
 
   create() {
@@ -76,7 +71,6 @@ export default class Game {
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
 
     const ball = new THREE.SphereGeometry(30, 30, 30)
-    console.log(ball)
 
     // const texStar = new THREE.TextureLoader().load(start)
     const matStar = new THREE.PointsMaterial({
