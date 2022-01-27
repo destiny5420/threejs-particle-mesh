@@ -2,6 +2,7 @@
 import 'main.css'
 import '@/js/common/common'
 import gsap from 'gsap'
+import $ from 'jquery'
 import Game from '@/js/main/game'
 
 const game = new Game()
@@ -29,6 +30,16 @@ gsap
     },
     '-=0.5',
   )
+
+const changeMesh = game.changeMesh()
+
+$('.btn-arrow-prev').on('click', function () {
+  changeMesh(false)
+})
+
+$('.btn-arrow-next').on('click', function () {
+  changeMesh(true)
+})
 
 /*!
  * -- Preload Sample --

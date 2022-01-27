@@ -69,3 +69,19 @@
 .btn-discover {
   @apply py-3 px-7 text-white text-base border-white border-1 rounded-full duration-200 hover:bg-white hover:text-black;
 }
+
+.page-nav {
+  @apply absolute z-30 bottom-10% right-5% flex justify-center items-center w-2/5;
+}
+
+.btn-arrow {
+  @apply text-white p-5 rounded-full border-white border-1 flex justify-center items-center mx-2 hover:bg-gray-100 duration-300 hover:text-black hover:border-transparent;
+}
+
+.page-line {
+  @apply h-0.05rem mx-5 w-full bg-white;
+}
+
+.page-num {
+  @apply text-white font-Oswald text-7xl;
+}
