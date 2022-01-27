@@ -14,6 +14,8 @@ export default class Game {
   constructor() {
     const self = this
 
+    this.isMobile = window.innerWidth <= 640
+
     this.name = `Game Constructor`
 
     this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 100)
@@ -43,7 +45,7 @@ export default class Game {
     this.points = null
     this.pointsGSAPs = []
     this.pointPathArray = []
-    this.pathIndex = 0
+    this.pathIndex = -1
 
     this.cameraGsap = gsap
       .timeline({
@@ -57,7 +59,7 @@ export default class Game {
           z: 2,
         },
         {
-          z: 20,
+          z: self.isMobile ? 50 : 20,
           duration: 1.75,
           ease: 'power1.out',
         },
@@ -68,7 +70,7 @@ export default class Game {
           y: 0,
         },
         {
-          y: -20,
+          y: self.isMobile ? -30 : -20,
           duration: 1.75,
           ease: 'power1.out',
           onUpdate: () => {
@@ -79,16 +81,27 @@ export default class Game {
       )
       .pause()
 
+    gsap.set('.content-button', {
+      y: 20,
+      opacity: 0,
+    })
+
+    gsap.set('.page-nav', {
+      y: 20,
+      opacity: 0,
+    })
+
     this.create()
     this.animation()
 
-    // $('#web-gl').on('click', function (e) {
-    //   self.pointsGSAPs.forEach((el) => el.restart())
-    //   self.cameraGsap.restart()
-    // })
     gsap.delayedCall(2.5, () => {
-      self.pointsGSAPs.forEach((el) => el.restart())
+      this.changeMethod(true)
       self.cameraGsap.restart()
+
+      gsap.to('.page-nav', {
+        y: 20,
+        opacity: 1,
+      })
     })
   }
 
@@ -107,13 +120,36 @@ export default class Game {
     this.startGeometry = new THREE.BufferGeometry()
     this.startGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
 
-    let ball = new THREE.SphereGeometry(30, 30, 30)
-    ball = new THREE.TorusKnotGeometry(10, 3, 100, 16)
-
-    this.pointPathArray.push(new THREE.SphereGeometry(15, 64, 32))
-    this.pointPathArray.push(new THREE.TorusGeometry(10, 3, 16, 100))
-    this.pointPathArray.push(new THREE.CylinderGeometry(5, 5, 20, 32))
-    this.pointPathArray.push(new THREE.TorusKnotGeometry(10, 3, 100, 16))
+    this.pointPathArray.push({
+      area: 'Bermuda',
+      name1: 'Town Hill',
+      name2: 'Bermuda',
+      description:
+        'Town Hill has an elevation of 77 metres. Town Hill is the highest point on the island of Bermuda at 79 metres.',
+      pointData: new THREE.SphereGeometry(15, 64, 32),
+    })
+    this.pointPathArray.push({
+      area: 'Guadeloupe',
+      name1: 'La Grande',
+      name2: 'Soufrière',
+      description: `In 1976 a large amount of seismic activity led to a mass evacuation of the island's 72,000 residents.`,
+      pointData: new THREE.TorusGeometry(10, 3, 16, 100),
+    })
+    this.pointPathArray.push({
+      area: 'Falkland Islands',
+      name1: 'Mount',
+      name2: 'Usborne',
+      description:
+        'The islands lie on the boundary of the subantarctic oceanic and tundra climate zones.',
+      pointData: new THREE.CylinderGeometry(5, 5, 20, 32),
+    })
+    this.pointPathArray.push({
+      area: 'Guadeloupe',
+      name1: 'La Grande',
+      name2: 'Soufrière',
+      description: 'The region formerly included Saint Barthélemy and Saint Martin.',
+      pointData: new THREE.TorusKnotGeometry(10, 3, 100, 16),
+    })
 
     // const texStar = new THREE.TextureLoader().load(start)
     const matStar = new THREE.PointsMaterial({
@@ -127,72 +163,119 @@ export default class Game {
 
     this.scene.add(this.points)
 
-    const startPos = this.startGeometry.getAttribute('position')
-    const destPos = this.pointPathArray[this.pathIndex].getAttribute('position')
-    self.setPageNum(self.pathIndex)
-
-    for (let i = 0; i < startPos.count; i += 1) {
-      const cur = i % destPos.count
-
-      this.pointsGSAPs.push(
-        gsap.fromTo(
-          startPos.array,
-          {
-            [i * 3]: startPos.array[i * 3],
-            [i * 3 + 1]: startPos.array[i * 3 + 1],
-            [i * 3 + 2]: startPos.array[i * 3 + 2],
-          },
-          {
-            [i * 3]: destPos.array[cur * 3],
-            [i * 3 + 1]: destPos.array[cur * 3 + 1],
-            [i * 3 + 2]: destPos.array[cur * 3 + 2],
-            duration: 2,
-            ease: 'power2.out',
-            onUpdate: () => {
-              startPos.needsUpdate = true
-            },
-            paused: true,
-          },
-        ),
-      )
-    }
-
-    // const fbxLoader = new FBXLoader()
-    // fbxLoader.load('/src/images/model/guitar/guitar.FBX', function (obj) {
-    //   console.log(obj.children[0].geometry.getAttribute('position'))
-    //   const startPos = geometry.getAttribute('position')
-    //   const destPos = obj.children[0].geometry.getAttribute('position')
-
-    //   for (let i = 0; i < startPos.count; i += 1) {
-    //     const cur = i % destPos.count
-
-    //     self.pointsGSAPs.push(
-    //       gsap.fromTo(
-    //         startPos.array,
-    //         {
-    //           [i * 3]: startPos.array[i * 3],
-    //           [i * 3 + 1]: startPos.array[i * 3 + 1],
-    //           [i * 3 + 2]: startPos.array[i * 3 + 2],
-    //         },
-    //         {
-    //           [i * 3]: destPos.array[cur * 3],
-    //           [i * 3 + 1]: destPos.array[cur * 3 + 1],
-    //           [i * 3 + 2]: destPos.array[cur * 3 + 2],
-    //           duration: 2,
-    //           ease: 'power2.out',
-    //           onUpdate: () => {
-    //             startPos.needsUpdate = true
-    //           },
-    //           paused: true,
-    //         },
-    //       ),
-    //     )
-    //   }
-    // })
+    this.changeMethod = this.changeMesh()
   }
 
   setPageNum(index) {
     $('.page-nav .page-num').text(`0${index + 1}`)
+  }
+
+  setContent(index) {
+    const self = this
+    const underLine = $('.under-line-inner')
+    const mountainArea = $('.mountain-area')
+    const mountainName1 = $('.mountain-name-first-1')
+    const mountainName2 = $('.mountain-name-first-2')
+    const mountainDescription = $('.mountain-description')
+    const contentBtn = $('.content-button')
+
+    gsap
+      .timeline()
+      .fromTo(
+        underLine,
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+          y: '1rem',
+        },
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          y: 0,
+          duration: 0.75,
+          ease: 'power2.out',
+        },
+      )
+      .fromTo(
+        mountainArea,
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+          y: '1rem',
+        },
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          y: 0,
+          duration: 0.75,
+          ease: 'power2.out',
+          onStart: () => {
+            mountainArea.text(`${self.pointPathArray[index].area}`)
+          },
+        },
+        '-=0.7',
+      )
+      .fromTo(
+        mountainName1,
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+          y: '1rem',
+        },
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          y: 0,
+          duration: 0.75,
+          ease: 'power2.out',
+          onStart: () => {
+            mountainName1.text(`${self.pointPathArray[index].name1}`)
+          },
+        },
+        '-=0.7',
+      )
+      .fromTo(
+        mountainName2,
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+          y: '1rem',
+        },
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          y: 0,
+          duration: 0.75,
+          ease: 'power2.out',
+          onStart: () => {
+            mountainName2.text(`${self.pointPathArray[index].name2}`)
+          },
+        },
+        '-=0.7',
+      )
+      .fromTo(
+        mountainDescription,
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+          y: '1rem',
+        },
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          y: 0,
+          duration: 0.75,
+          ease: 'power2.out',
+          onStart: () => {
+            mountainDescription.text(`${self.pointPathArray[index].description}`)
+          },
+        },
+        '-=0.7',
+      )
+      .fromTo(
+        contentBtn,
+        {
+          y: 20,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.75,
+          ease: 'power2.out',
+        },
+        '-=0.7',
+      )
   }
 
   animation(time) {
@@ -230,8 +313,7 @@ export default class Game {
         }
       }
 
-      // randomIndex = Maths.getRandomByInt(0, self.pointPathArray.length - 1)
-      destPos = self.pointPathArray[self.pathIndex].getAttribute('position')
+      destPos = self.pointPathArray[self.pathIndex].pointData.getAttribute('position')
 
       for (let i = 0; i < startPos.count; i += 1) {
         const cur = i % destPos.count
@@ -283,6 +365,8 @@ export default class Game {
             ease: 'power1.out',
           },
         )
+
+      self.setContent(self.pathIndex)
     }
   }
 }
