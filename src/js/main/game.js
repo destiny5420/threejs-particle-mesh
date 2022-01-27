@@ -5,8 +5,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import gsap from 'gsap'
 
-import start from '@/images/main/star.png'
-
 const ORBIT_CONTROL_ENABLE = false
 
 export default class Game {
@@ -80,7 +78,7 @@ export default class Game {
     //   self.pointsGSAPs.forEach((el) => el.restart())
     //   self.cameraGsap.restart()
     // })
-    gsap.delayedCall(2, () => {
+    gsap.delayedCall(2.5, () => {
       self.pointsGSAPs.forEach((el) => el.restart())
       self.cameraGsap.restart()
     })

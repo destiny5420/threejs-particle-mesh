@@ -1,3 +1,4 @@
+/* stylelint-disable scss/at-rule-no-unknown */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -26,8 +27,10 @@
   @apply absolute z-30 bottom-10% left-5%;
 }
 
-.text-wrap {
-  @apply mb-2;
+@layer components {
+  .text-wrap {
+    @apply mb-2;
+  }
 }
 
 .text-block {
@@ -57,4 +60,12 @@
 .text-reveal {
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   transform: translateY(2rem);
+}
+
+.btn-tag {
+  @apply p-4 bg-yellow-500 rounded-full mr-7;
+}
+
+.btn-discover {
+  @apply py-3 px-7 text-white text-base border-white border-1 rounded-full duration-200 hover:bg-white hover:text-black;
 }
