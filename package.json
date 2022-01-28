@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development TAILWIND_MODE=watch webpack-dev-server --config webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
-    "beta": "aws s3 sync ./dist s3://{host} --delete",
-    "deploy": "aws s3 sync ./dist s3://{host} --delete"
+    "deploy": "aws s3 sync ./dist s3://threeparticlemesh.stackergames.org --delete --profile paper-hsiao"
   },
   "author": "",
   "license": "ISC",

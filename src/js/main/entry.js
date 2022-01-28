@@ -1,13 +1,14 @@
 /* eslint-disable import/extensions */
 import 'main.css'
 import '@/js/common/common'
-import gsap from 'gsap'
 import $ from 'jquery'
 import Game from '@/js/main/game'
+import Console from '@/js/common/console'
 
 const game = new Game()
-
 const changeMesh = game.changeMesh()
+
+Console()
 
 $('.btn-arrow-prev').on('click', function () {
   changeMesh(false)
