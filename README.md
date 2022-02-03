@@ -25,7 +25,7 @@ $ yarn deploy
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
-## Branch 切分
+## Branch
 
 - dev -> The main development branch, which is merged into master after debugging is complete.
 - master -> The main release branch.
