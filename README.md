@@ -1,63 +1,36 @@
-<!-- 專案名稱 -->
+# Three.js Particle follow mesh
 
-# `專案名稱`
+Use Three.js several basic geometry with GSAP, let the particle point change with the position the mesh vertex, and use the clip-path parameter in CSS to achieve the effect of text switching.
 
-### 框架版本資訊
+[Demo](https://threeparticlemesh.stackergames.org/)
 
-<!-- 相關核心框架 -->
+## Build Setup
 
-- JavaScript ES6
+```bash
+# install dependencies
+$ yarn install
 
-### 開發中套件版本
+# serve with hot reload at localhost:3000
+$ yarn dev
 
-<!-- 需要Follow版本的套件們 -->
+# build for production and launch server
+$ yarn build
 
-- [webpack-cli](https://github.com/webpack/webpack-cli) : `^3.3.11`
+# deploy to test station
+$ yarn beta
 
-<!-- 其他需求 -->
-
-### ESlint 設定
-
-`extends: ['airbnb-base', 'plugin:prettier/recommended']`
-
-### Branch 切分
-
-- master -> 穩定主線
-- dev -> 開發主線，debug 後進 master
-
-### Tag 版本號資訊
-
-- v0.0.0 [主版本號].[次版本號].[修訂版本號]
-- 主版本號：軟體有重大更新的時候遞增，重大更新通常是指功能與介面都有大幅度變動的時候
-- 次版本號：軟體發佈新功能，但是並不會大幅影響到整個軟體的時候遞增
-- 修訂版本號：通常是在軟體有 bug，發布 bug 的修正版時遞增
-
-### 安裝
-
-```
-yarn install
+# Deploy to the official site
+$ yarn deploy
 ```
 
-### 開發
+For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
-```
-yarn dev
-```
+## Branch 切分
 
-### 編譯
+- dev -> The main development branch, which is merged into master after debugging is complete.
+- master -> The main release branch.
 
-```
-yarn build
-```
+## Credits
 
-### beta
-
-```
-yarn beta
-```
-
-### 部署
-
-```
-yarn deploy
-```
+- [three.js](https://threejs.org/) 
+- [GSAP](https://greensock.com/)
